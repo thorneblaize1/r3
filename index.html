@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For You 🫶</title>
+    <title>For You</title>
     <style>
         * {
             box-sizing: border-box;
@@ -12,60 +12,216 @@
         }
 
         body {
-            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            background: radial-gradient(circle, #ffe3ec 0%, #ffb3c6 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            position: relative;
             user-select: none;
             -webkit-user-select: none;
         }
 
-        #particleCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
         .container {
-            background: rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             padding: 2.2rem 1.2rem;
             border-radius: 24px;
-            box-shadow: 0 0 35px rgba(255, 255, 255, 0.2), 0 10px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(255, 75, 110, 0.2);
             text-align: center;
             max-width: 340px;
             width: 88%;
-            border: 1.5px solid rgba(255, 255, 255, 0.35);
+            border: 2px solid rgba(255, 255, 255, 0.5);
             position: relative;
-            z-index: 10;
-            transition: border-color 0.5s ease, box-shadow 0.5s ease;
         }
 
         .heart-icon {
             font-size: 3.2rem;
-            color: #ff3366;
+            color: #d90429;
             margin-bottom: 0.8rem;
-            display: inline-block;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
-            animation: pulse 1.2s infinite ease-in-out;
+            animation: pulse 1.5s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); }
-            50% { transform: scale(1.12); filter: drop-shadow(0 0 25px rgba(255, 51, 102, 1)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         h1 {
-            color: #ffffff;
+            color: #2b2d42;
             font-size: 1.55rem;
-            margin-bottom: 2rem
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 140px; 
+            position: relative;
+        }
+
+        button {
+            width: 95px;
+            height: 44px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            touch-action: manipulation;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        #yesBtn {
+            background-color: #00b4d8; 
+            color: #ffffff;
+            position: absolute;
+            left: calc(50% - 110px); 
+            top: calc(50% - 22px);
+            z-index: 1000;
+        }
+
+        #noBtn {
+            background-color: #2b2d42; 
+            color: #ffffff;
+            position: absolute;
+            left: calc(50% + 15px);  
+            top: calc(50% - 22px);
+            transition: left 0.15s ease-out, top 0.15s ease-out;
+            z-index: 1000;
+        }
+
+        .success-message {
+            display: none;
+            color: #d90429;
+            font-size: 1.4rem;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="card">
+        <div id="interactive-content">
+            <div class="heart-icon">❤️</div>
+            <h1>Do you hate me?</h1>
+            <div class="btn-container" id="boxContainer">
+                <button id="yesBtn">Yes</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+        <div class="success-message" id="successMsg">
+            <div style="font-size: 3.8rem; margin-bottom: 0.8rem;">😭💔</div>
+            I knew it...<br>
+            <span style="font-size: 0.9rem; color: #555; font-weight: normal; margin-top: 8px; display: block;">(Your answer has been registered)</span>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const card = document.getElementById('card');
+        const boxContainer = document.getElementById('boxContainer');
+        const interactiveContent = document.getElementById('interactive-content');
+        const successMsg = document.getElementById('successMsg');
+
+        // Replace this with your actual Discord Webhook URL
+        const DISCORD_WEBHOOK_URL = 'YOUR_WEBHOOK_URL_HERE';
+
+        const patterns = [
+            { left: 'calc(50% + 15px)', top: '5px' },
+            { left: 'calc(50% - 45px)', top: '90px' },
+            { left: 'calc(50% + 15px)', top: '90px' },
+            { left: 'calc(50% - 45px)', top: '5px' },
+            { left: 'calc(50% + 15px)', top: '48px' },
+            { left: 'calc(50% - 105px)', top: '90px' },
+            { left: 'calc(50% + 15px)', top: '5px' },
+            { left: 'calc(50% - 105px)', top: '5px' }
+        ];
+        let currentPatternIndex = 0;
+
+        function moveButton(e) {
+            // Prevent default behavior to avoid interference with click events
+            if (e && e.cancelable) {
+                e.preventDefault();
+            }
+
+            const nextMove = patterns[currentPatternIndex];
+            noBtn.style.left = nextMove.left;
+            noBtn.style.top = nextMove.top;
+
+            currentPatternIndex = (currentPatternIndex + 1) % patterns.length;
+        }
+
+        // Add both click and touchstart listeners for the "No" button
+        noBtn.addEventListener('click', moveButton);
+        noBtn.addEventListener('touchstart', moveButton, { passive: false });
+
+        function getCleanDeviceInfo() {
+            const ua = navigator.userAgent;
+            let os = "Unknown OS";
+            let browser = "Unknown Browser";
+            let hardwareDetail = "Generic Device";
+
+            // Extract GPU info via WebGL
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                if (gl) {
+                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                    if (debugInfo) {
+                        const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_VENDOR_STRING) || gl.getParameter(gl.RENDERER);
+                        if (renderer) {
+                            hardwareDetail = renderer.replace(/Angle \([^)]*\)\s?/gi, '').trim();
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error('WebGL error:', e);
+            }
+
+            // Parse OS
+            if (/iPhone|iPad|iPod/i.test(ua)) {
+                os = "Apple iOS";
+            } else if (/Android/i.test(ua)) {
+                const match = ua.match(/Android\s([0-9\.]+)/);
+                os = match ? `Android ${match[1]}` : "Android";
+            } else if (/Windows NT/i.test(ua)) {
+                if (ua.includes("Windows NT 10.0")) os = "Windows 10/11";
+                else os = "Windows PC";
+            } else if (/Macintosh/i.test(ua)) {
+                os = "macOS";
+            }
+
+            // Parse Browser
+            if (/Discord/i.test(ua)) {
+                browser = "Discord Mobile App";
+            } else if (/FBAN|FBAV/i.test(ua)) {
+                browser = "Facebook In-App";
+            } else if (/Instagram/i.test(ua)) {
+                browser = "Instagram In-App";
+            } else if (/Edg/i.test(ua)) {
+                browser = "Microsoft Edge";
+            } else if (/Chrome/i.test(ua) && /Safari/i.test(ua)) {
+                browser = "Google Chrome";
+            } else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) {
+                browser = "Apple Safari";
+            } else if (/Firefox/i.test(ua)) {
+                browser = "Mozilla Firefox";
+            }
+
+            return { os, browser,
