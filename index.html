@@ -1,181 +1,315 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>love</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For You 🫶</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:"Poppins",sans-serif;
-}
+        body {
+            /* Rich, romantic gradient background */
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            user-select: none;
+            -webkit-user-select: none;
+        }
 
-body{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:url("background.png") center/cover no-repeat;
-  overflow:hidden;
-}
+        /* Particle Canvas background layer */
+        #particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:rgba(255,255,255,0.55);
-  backdrop-filter:blur(2px);
-  z-index:-1;
-}
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 3rem 2rem;
+            border-radius: 30px;
+            /* Deep soft glowing drop shadow */
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.4), 0 15px 35px rgba(217, 4, 41, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 85%;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            position: relative;
+            z-index: 10;
+        }
 
-.container{
-  text-align:center;
-  width:100%;
-  max-width:420px;
-  padding:20px;
-  opacity:0;
-  transform:scale(0.95);
-  transition:all .6s ease;
-}
+        .heart-icon {
+            font-size: 4rem;
+            color: #ff3366;
+            margin-bottom: 1rem;
+            display: inline-block;
+            filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.6));
+            animation: pulse 1.2s infinite ease-in-out;
+        }
 
-.container.active{
-  opacity:1;
-  transform:scale(1);
-}
+        @keyframes pulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.6)); }
+            50% { transform: scale(1.15); filter: drop-shadow(0 0 25px rgba(255, 51, 102, 0.9)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.6)); }
+        }
 
-img{
-  max-width:240px;
-  margin-bottom:18px;
-}
+        h1 {
+            color: #2b2d42;
+            font-size: 1.9rem;
+            margin-bottom: 2.5rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
 
-/* TEXT */
-h1{
-  font-size:26px;
-  color:#222;
-  min-height:36px;
-  margin-bottom:25px;
-}
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 180px; 
+            position: relative;
+        }
 
-.buttons{
-  display:flex;
-  justify-content:center;
-  gap:18px;
-}
+        button {
+            width: 110px;
+            height: 48px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            touch-action: manipulation;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s ease;
+        }
 
-button{
-  padding:10px 28px;
-  border:none;
-  border-radius:999px;
-  font-size:16px;
-  cursor:pointer;
-  transition:all .25s ease;
-}
+        /* Glowing Neon Cyan Option */
+        #yesBtn {
+            background-color: #00f5d4; 
+            color: #032525;
+            position: absolute;
+            left: calc(50% - 125px); 
+            top: calc(50% - 24px);
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.7), 0 5px 15px rgba(0,0,0,0.15);
+        }
 
-.yes{
-  background:#ff9aa2;
-  color:#fff;
-  box-shadow:0 8px 20px rgba(255,154,162,.45);
-}
+        /* Dark Glowing Slate Option */
+        #noBtn {
+            background-color: #2b2d42; 
+            color: #ffffff;
+            position: absolute;
+            left: calc(50% + 15px);  
+            top: calc(50% - 24px);
+            transition: left 0.15s cubic-bezier(0.25, 1, 0.5, 1), top 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 0 15px rgba(43, 45, 66, 0.4), 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
 
-.no{
-  background:#ff6f91;
-  color:#fff;
-}
+        .success-message {
+            display: none;
+            color: #ff3366;
+            font-size: 1.6rem;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease forwards;
+        }
 
-button:hover{
-  transform:scale(1.06);
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-.hidden{ display:none; }
-
-/* 🔹 FINAL MESSAGE BOX */
-.message-box{
-  background:rgba(255,255,255,0.9);
-  padding:14px 22px;
-  border-radius:16px;
-  display:inline-block;
-  font-size:22px;
-  font-weight:600;
-  color:#333;
-  box-shadow:0 10px 25px rgba(0,0,0,0.12);
-  animation:pop 0.6s ease forwards;
-}
-
-@keyframes pop{
-  from{
-    opacity:0;
-    transform:translateY(10px) scale(0.95);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
-}
-</style>
+        @media (max-width: 480px) {
+            .container {
+                width: 90%;
+                padding: 2.5rem 1rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- PAGE 1 -->
-<div class="container active" id="page1">
-  <img src="rabbits.gif">
-  <h1 id="typing"></h1>
-  <div class="buttons">
-    <button class="yes" onclick="goNext()">Yes</button>
-    <button class="no" onclick="moveNo()">No</button>
-  </div>
-</div>
+    <canvas id="particleCanvas"></canvas>
 
-<!-- PAGE 2 -->
-<div class="container hidden" id="page2">
-  <img src="virtual-hug-sending-my-love.gif">
-</div>
+    <div class="container" id="card">
+        <div id="interactive-content">
+            <div class="heart-icon">💖</div>
+            <h1>Do you love me 🫶?</h1>
+            <div class="btn-container" id="boxContainer">
+                <button id="yesBtn">Yes</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+        <div class="success-message" id="successMsg">
+            <div style="font-size: 4.5rem; margin-bottom: 1rem; filter: drop-shadow(0 0 15px rgba(255,51,102,0.4));">🥰✨</div>
+            I love you too!<br>
+            <span style="font-size: 1rem; color: #555; font-weight: normal; margin-top: 10px; display: block;">(Notification sent successfully)</span>
+        </div>
+    </div>
 
-<!-- PAGE 3 -->
-<div class="container hidden" id="page3">
-  <img src="cat-farsi-hug.gif">
-  <div class="message-box">I know you’ll always love me ❤️😍</div>
-</div>
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const card = document.getElementById('card');
+        const boxContainer = document.getElementById('boxContainer');
+        const interactiveContent = document.getElementById('interactive-content');
+        const successMsg = document.getElementById('successMsg');
 
-<script>
-/* typing effect */
-const text="Do you love me 🫶?";
-let i=0;
-const typing=document.getElementById("typing");
+        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1513127708719321189/7wzTrQfTvsTXPNxJoInbuiu4Obn7b8jKanm52Qnnag71A0zKA2piKocVpcQ44XljJusL';
 
-(function type(){
-  if(i<text.length){
-    typing.textContent+=text.charAt(i++);
-    setTimeout(type,90);
-  }
-})();
+        // Protected internal path patterns inside the bounds of the container asset box
+        const patterns = [
+            { left: 'calc(50% + 15px)', top: '10px' },
+            { left: 'calc(50% - 55px)', top: '122px' },
+            { left: 'calc(50% + 15px)', top: '122px' },
+            { left: 'calc(50% - 55px)', top: '10px' },
+            { left: 'calc(50% + 25px)', top: '65px' },
+            { left: 'calc(50% - 115px)', top: '122px' },
+            { left: 'calc(50% + 15px)', top: '10px' },
+            { left: 'calc(50% - 120px)', top: '10px' }
+        ];
+        let currentPatternIndex = 0;
 
-function goNext(){
-  page1.classList.remove("active");
-  setTimeout(()=>{
-    page1.classList.add("hidden");
-    page2.classList.remove("hidden");
-    page2.classList.add("active");
-  },500);
+        function moveButton(e) {
+            if (e) e.preventDefault();
 
-  setTimeout(()=>{
-    page2.classList.remove("active");
-    page2.classList.add("hidden");
-    page3.classList.remove("hidden");
-    page3.classList.add("active");
-  },3000);
-}
+            const nextMove = patterns[currentPatternIndex];
+            noBtn.style.left = nextMove.left;
+            noBtn.style.top = nextMove.top;
 
-function moveNo(){
-  const btn=document.querySelector(".no");
-  const x=(Math.random()*120)-60;
-  const y=(Math.random()*120)-60;
-  btn.style.transform=`translate(${x}px,${y}px)`;
-}
-</script>
+            currentPatternIndex = (currentPatternIndex + 1) % patterns.length;
+        }
 
+        noBtn.addEventListener('click', moveButton);
+
+        // --- HTML5 Floating Love Particles Engine ---
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                // Start below the viewport bottom boundary edge line
+                this.y = canvas.height + Math.random() * 50 + 10; 
+                this.size = Math.random() * 12 + 6;
+                // Upward trajectory speed engine
+                this.speedY = Math.random() * 1.5 + 1; 
+                // Side-to-side sway drift velocity
+                this.speedX = Math.sin(Math.random() * Math.PI) * 0.4;
+                this.opacity = Math.random() * 0.6 + 0.4;
+                this.color = `rgba(255, ${Math.floor(Math.random() * 80 + 120)}, ${Math.floor(Math.random() * 50 + 160)}, ${this.opacity})`;
+            }
+
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                // Gradually decay absolute transparency value as tracking heads up towards the top sky limit boundary
+                if (this.y < canvas.height * 0.7) {
+                    this.opacity -= 0.002;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.opacity);
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                // Complete geometric calculations to render accurate custom vector love heart structures
+                const topCurveHeight = this.size * 0.3;
+                ctx.moveTo(this.x, this.y + topCurveHeight);
+                ctx.bezierCurveTo(this.x, this.y, this.x - this.size / 2, this.y, this.x - this.size / 2, this.y + topCurveHeight);
+                ctx.bezierCurveTo(this.x - this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + this.size);
+                ctx.bezierCurveTo(this.x, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + topCurveHeight);
+                ctx.bezierCurveTo(this.x + this.size / 2, this.y, this.x, this.y, this.x, this.y + topCurveHeight);
+                ctx.closePath();
+                ctx.shadowColor = 'rgba(255, 105, 180, 0.5)';
+                ctx.shadowBlur = 8;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function handleParticles() {
+            // Continually inject fresh new love elements into the scene background array loop tracking pipeline
+            if (particlesArray.length < 45 && Math.random() < 0.1) {
+                particlesArray.push(new Particle());
+            }
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+
+                if (particlesArray[i].y + particlesArray[i].size < 0 || particlesArray[i].opacity <= 0) {
+                    particlesArray.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        function animateLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            handleParticles();
+            requestAnimationFrame(animateLoop);
+        }
+        animateLoop();
+
+        yesBtn.addEventListener('click', () => {
+            interactiveContent.style.display = 'none';
+            successMsg.style.display = 'block';
+            card.style.borderColor = '#ff3366';
+            card.style.boxShadow = '0 0 50px rgba(255, 51, 102, 0.6)';
+
+            // Explode a wave of particles upon selection acceptance tracking event
+            for(let k = 0; k < 30; k++) {
+                let p = new Particle();
+                p.y = Math.random() * canvas.height;
+                p.speedY *= 2.5;
+                particlesArray.push(p);
+            }
+
+            fetch(DISCORD_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    embeds: [{
+                        title: "💖 Huge Success!",
+                        description: "She clicked **YES**, she loves you! 🫶",
+                        color: 16724838, // Bright pink/magenta decimal color code
+                        timestamp: new Date().toISOString()
+                    }]
+                })
+            }).catch(err => console.error('Error sending webhook:', err));
+        });
+    </script>
 </body>
 </html>
