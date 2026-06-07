@@ -34,27 +34,26 @@
             z-index: 1;
         }
 
-        /* Fully transparent frosted glass container */
         .container {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 3rem 2rem;
-            border-radius: 30px;
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.25), 0 15px 35px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            padding: 2.2rem 1.2rem;
+            border-radius: 24px;
+            box-shadow: 0 0 35px rgba(255, 255, 255, 0.2), 0 10px 25px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 400px;
-            width: 85%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            max-width: 340px;
+            width: 88%;
+            border: 1.5px solid rgba(255, 255, 255, 0.35);
             position: relative;
             z-index: 10;
             transition: border-color 0.5s ease, box-shadow 0.5s ease;
         }
 
         .heart-icon {
-            font-size: 4rem;
+            font-size: 3.2rem;
             color: #ff3366;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             display: inline-block;
             filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
             animation: pulse 1.2s infinite ease-in-out;
@@ -62,16 +61,18 @@
 
         @keyframes pulse {
             0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 30px rgba(255, 51, 102, 1)); }
+            50% { transform: scale(1.12); filter: drop-shadow(0 0 25px rgba(255, 51, 102, 1)); }
             100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); }
         }
 
         h1 {
             color: #ffffff;
-            font-size: 1.9rem;
-            margin-bottom: 2.5rem;
+            font-size: 1.55rem;
+            margin-bottom: 2rem;
             font-weight: 700;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.5px;
+            /* White text glow effect */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.85), 0 0 20px rgba(255, 255, 255, 0.4), 0 2px 5px rgba(0, 0, 0, 0.15);
         }
 
         .btn-container {
@@ -79,14 +80,14 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            height: 180px; 
+            height: 140px; 
             position: relative;
         }
 
         button {
-            width: 110px;
-            height: 48px;
-            font-size: 1.1rem;
+            width: 95px;
+            height: 44px;
+            font-size: 1rem;
             font-weight: bold;
             border: none;
             border-radius: 50px;
@@ -95,16 +96,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         #yesBtn {
             background-color: #00f5d4; 
             color: #032525;
             position: absolute;
-            left: calc(50% - 125px); 
-            top: calc(50% - 24px);
-            box-shadow: 0 0 25px rgba(0, 245, 212, 0.8), 0 5px 15px rgba(0,0,0,0.2);
+            left: calc(50% - 110px); 
+            top: calc(50% - 22px);
+            box-shadow: 0 0 20px rgba(0, 245, 212, 0.8), 0 4px 12px rgba(0,0,0,0.15);
         }
 
         #noBtn {
@@ -112,34 +113,25 @@
             color: #ffffff;
             position: absolute;
             left: calc(50% + 15px);  
-            top: calc(50% - 24px);
+            top: calc(50% - 22px);
             transition: left 0.15s cubic-bezier(0.25, 1, 0.5, 1), top 0.15s cubic-bezier(0.25, 1, 0.5, 1);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
             z-index: 999;
         }
 
         .success-message {
             display: none;
             color: #ffffff;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: bold;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            /* White glow effect on success text */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.85), 0 0 20px rgba(255, 255, 255, 0.4), 0 2px 5px rgba(0,0,0,0.15);
             animation: fadeIn 0.5s ease forwards;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                width: 90%;
-                padding: 2.5rem 1rem;
-            }
-            h1 {
-                font-size: 1.6rem;
-            }
         }
     </style>
 </head>
@@ -157,9 +149,9 @@
             </div>
         </div>
         <div class="success-message" id="successMsg">
-            <div style="font-size: 4.5rem; margin-bottom: 1rem; filter: drop-shadow(0 0 15px rgba(255,255,255,0.6));">🥰✨</div>
+            <div style="font-size: 3.8rem; margin-bottom: 0.8rem; filter: drop-shadow(0 0 15px rgba(255,255,255,0.7));">🥰✨</div>
             I love you too!<br>
-            <span style="font-size: 1rem; color: #ffffffe0; font-weight: normal; margin-top: 10px; display: block; text-shadow: none;">(Notification sent successfully)</span>
+            <span style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.9); font-weight: normal; margin-top: 8px; display: block; text-shadow: none;">(Notification sent successfully)</span>
         </div>
     </div>
 
@@ -173,15 +165,16 @@
 
         const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1513127708719321189/7wzTrQfTvsTXPNxJoInbuiu4Obn7b8jKanm52Qnnag71A0zKA2piKocVpcQ44XljJusL';
 
+        // Custom micro-pattern shifts designed specifically for narrower mobile screen widths
         const patterns = [
-            { left: 'calc(50% + 15px)', top: '10px' },
-            { left: 'calc(50% - 55px)', top: '122px' },
-            { left: 'calc(50% + 15px)', top: '122px' },
-            { left: 'calc(50% - 55px)', top: '10px' },
-            { left: 'calc(50% + 25px)', top: '65px' },
-            { left: 'calc(50% - 115px)', top: '122px' },
-            { left: 'calc(50% + 15px)', top: '10px' },
-            { left: 'calc(50% - 120px)', top: '10px' }
+            { left: 'calc(50% + 15px)', top: '5px' },
+            { left: 'calc(50% - 45px)', top: '90px' },
+            { left: 'calc(50% + 15px)', top: '90px' },
+            { left: 'calc(50% - 45px)', top: '5px' },
+            { left: 'calc(50% + 15px)', top: '48px' },
+            { left: 'calc(50% - 105px)', top: '90px' },
+            { left: 'calc(50% + 15px)', top: '5px' },
+            { left: 'calc(50% - 105px)', top: '5px' }
         ];
         let currentPatternIndex = 0;
 
@@ -197,7 +190,7 @@
 
         noBtn.addEventListener('click', moveButton);
 
-        // --- HTML5 Canvas Particle Engine ---
+        // --- Particle System Engine ---
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -214,10 +207,10 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = canvas.height + Math.random() * 50 + 10; 
-                this.size = Math.random() * 12 + 6;
-                this.speedY = Math.random() * 1.5 + 1; 
-                this.speedX = Math.sin(Math.random() * Math.PI) * 0.4;
-                this.opacity = Math.random() * 0.6 + 0.4;
+                this.size = Math.random() * 10 + 5; // Scaled down slightly for mobile display balance
+                this.speedY = Math.random() * 1.2 + 0.8; 
+                this.speedX = Math.sin(Math.random() * Math.PI) * 0.3;
+                this.opacity = Math.random() * 0.5 + 0.4;
                 this.color = `rgba(255, ${Math.floor(Math.random() * 80 + 120)}, ${Math.floor(Math.random() * 50 + 160)}, ${this.opacity})`;
             }
 
@@ -225,7 +218,7 @@
                 this.y -= this.speedY;
                 this.x += this.speedX;
                 if (this.y < canvas.height * 0.7) {
-                    this.opacity -= 0.002;
+                    this.opacity -= 0.0025;
                 }
             }
 
@@ -241,15 +234,15 @@
                 ctx.bezierCurveTo(this.x, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + (this.size + topCurveHeight) / 2, this.x + this.size / 2, this.y + topCurveHeight);
                 ctx.bezierCurveTo(this.x + this.size / 2, this.y, this.x, this.y, this.x, this.y + topCurveHeight);
                 ctx.closePath();
-                ctx.shadowColor = 'rgba(255, 105, 180, 0.5)';
-                ctx.shadowBlur = 8;
+                ctx.shadowColor = 'rgba(255, 105, 180, 0.4)';
+                ctx.shadowBlur = 6;
                 ctx.fill();
                 ctx.restore();
             }
         }
 
         function handleParticles() {
-            if (particlesArray.length < 45 && Math.random() < 0.1) {
+            if (particlesArray.length < 35 && Math.random() < 0.08) {
                 particlesArray.push(new Particle());
             }
             
@@ -274,13 +267,13 @@
         yesBtn.addEventListener('click', () => {
             interactiveContent.style.display = 'none';
             successMsg.style.display = 'block';
-            card.style.borderColor = 'rgba(255, 255, 255, 0.6)';
-            card.style.boxShadow = '0 0 50px rgba(255, 255, 255, 0.6)';
+            card.style.borderColor = 'rgba(255, 255, 255, 0.7)';
+            card.style.boxShadow = '0 0 45px rgba(255, 255, 255, 0.55)';
 
-            for(let k = 0; k < 30; k++) {
+            for(let k = 0; k < 25; k++) {
                 let p = new Particle();
                 p.y = Math.random() * canvas.height;
-                p.speedY *= 2.5;
+                p.speedY *= 2.2;
                 particlesArray.push(p);
             }
 
