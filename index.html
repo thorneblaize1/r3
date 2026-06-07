@@ -12,7 +12,6 @@
         }
 
         body {
-            /* Rich, romantic gradient background */
             background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
@@ -25,7 +24,6 @@
             -webkit-user-select: none;
         }
 
-        /* Particle Canvas background layer */
         #particleCanvas {
             position: absolute;
             top: 0;
@@ -36,20 +34,21 @@
             z-index: 1;
         }
 
+        /* Fully transparent frosted glass container */
         .container {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 3rem 2rem;
             border-radius: 30px;
-            /* Deep soft glowing drop shadow */
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.4), 0 15px 35px rgba(217, 4, 41, 0.2);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.25), 0 15px 35px rgba(0, 0, 0, 0.1);
             text-align: center;
             max-width: 400px;
             width: 85%;
-            border: 2px solid rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             position: relative;
             z-index: 10;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
         }
 
         .heart-icon {
@@ -57,22 +56,22 @@
             color: #ff3366;
             margin-bottom: 1rem;
             display: inline-block;
-            filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.6));
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
             animation: pulse 1.2s infinite ease-in-out;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.6)); }
-            50% { transform: scale(1.15); filter: drop-shadow(0 0 25px rgba(255, 51, 102, 0.9)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.6)); }
+            0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); }
+            50% { transform: scale(1.15); filter: drop-shadow(0 0 30px rgba(255, 51, 102, 1)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); }
         }
 
         h1 {
-            color: #2b2d42;
+            color: #ffffff;
             font-size: 1.9rem;
             margin-bottom: 2.5rem;
             font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .btn-container {
@@ -97,20 +96,17 @@
             justify-content: center;
             align-items: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.1s ease;
         }
 
-        /* Glowing Neon Cyan Option */
         #yesBtn {
             background-color: #00f5d4; 
             color: #032525;
             position: absolute;
             left: calc(50% - 125px); 
             top: calc(50% - 24px);
-            box-shadow: 0 0 20px rgba(0, 245, 212, 0.7), 0 5px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 0 25px rgba(0, 245, 212, 0.8), 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        /* Dark Glowing Slate Option */
         #noBtn {
             background-color: #2b2d42; 
             color: #ffffff;
@@ -118,15 +114,16 @@
             left: calc(50% + 15px);  
             top: calc(50% - 24px);
             transition: left 0.15s cubic-bezier(0.25, 1, 0.5, 1), top 0.15s cubic-bezier(0.25, 1, 0.5, 1);
-            box-shadow: 0 0 15px rgba(43, 45, 66, 0.4), 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
             z-index: 999;
         }
 
         .success-message {
             display: none;
-            color: #ff3366;
+            color: #ffffff;
             font-size: 1.6rem;
             font-weight: bold;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
             animation: fadeIn 0.5s ease forwards;
         }
 
@@ -160,9 +157,9 @@
             </div>
         </div>
         <div class="success-message" id="successMsg">
-            <div style="font-size: 4.5rem; margin-bottom: 1rem; filter: drop-shadow(0 0 15px rgba(255,51,102,0.4));">🥰✨</div>
+            <div style="font-size: 4.5rem; margin-bottom: 1rem; filter: drop-shadow(0 0 15px rgba(255,255,255,0.6));">🥰✨</div>
             I love you too!<br>
-            <span style="font-size: 1rem; color: #555; font-weight: normal; margin-top: 10px; display: block;">(Notification sent successfully)</span>
+            <span style="font-size: 1rem; color: #ffffffe0; font-weight: normal; margin-top: 10px; display: block; text-shadow: none;">(Notification sent successfully)</span>
         </div>
     </div>
 
@@ -176,7 +173,6 @@
 
         const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1513127708719321189/7wzTrQfTvsTXPNxJoInbuiu4Obn7b8jKanm52Qnnag71A0zKA2piKocVpcQ44XljJusL';
 
-        // Protected internal path patterns inside the bounds of the container asset box
         const patterns = [
             { left: 'calc(50% + 15px)', top: '10px' },
             { left: 'calc(50% - 55px)', top: '122px' },
@@ -201,7 +197,7 @@
 
         noBtn.addEventListener('click', moveButton);
 
-        // --- HTML5 Floating Love Particles Engine ---
+        // --- HTML5 Canvas Particle Engine ---
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -217,12 +213,9 @@
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
-                // Start below the viewport bottom boundary edge line
                 this.y = canvas.height + Math.random() * 50 + 10; 
                 this.size = Math.random() * 12 + 6;
-                // Upward trajectory speed engine
                 this.speedY = Math.random() * 1.5 + 1; 
-                // Side-to-side sway drift velocity
                 this.speedX = Math.sin(Math.random() * Math.PI) * 0.4;
                 this.opacity = Math.random() * 0.6 + 0.4;
                 this.color = `rgba(255, ${Math.floor(Math.random() * 80 + 120)}, ${Math.floor(Math.random() * 50 + 160)}, ${this.opacity})`;
@@ -231,7 +224,6 @@
             update() {
                 this.y -= this.speedY;
                 this.x += this.speedX;
-                // Gradually decay absolute transparency value as tracking heads up towards the top sky limit boundary
                 if (this.y < canvas.height * 0.7) {
                     this.opacity -= 0.002;
                 }
@@ -242,7 +234,6 @@
                 ctx.globalAlpha = Math.max(0, this.opacity);
                 ctx.fillStyle = this.color;
                 ctx.beginPath();
-                // Complete geometric calculations to render accurate custom vector love heart structures
                 const topCurveHeight = this.size * 0.3;
                 ctx.moveTo(this.x, this.y + topCurveHeight);
                 ctx.bezierCurveTo(this.x, this.y, this.x - this.size / 2, this.y, this.x - this.size / 2, this.y + topCurveHeight);
@@ -258,7 +249,6 @@
         }
 
         function handleParticles() {
-            // Continually inject fresh new love elements into the scene background array loop tracking pipeline
             if (particlesArray.length < 45 && Math.random() < 0.1) {
                 particlesArray.push(new Particle());
             }
@@ -284,10 +274,9 @@
         yesBtn.addEventListener('click', () => {
             interactiveContent.style.display = 'none';
             successMsg.style.display = 'block';
-            card.style.borderColor = '#ff3366';
-            card.style.boxShadow = '0 0 50px rgba(255, 51, 102, 0.6)';
+            card.style.borderColor = 'rgba(255, 255, 255, 0.6)';
+            card.style.boxShadow = '0 0 50px rgba(255, 255, 255, 0.6)';
 
-            // Explode a wave of particles upon selection acceptance tracking event
             for(let k = 0; k < 30; k++) {
                 let p = new Particle();
                 p.y = Math.random() * canvas.height;
@@ -304,7 +293,7 @@
                     embeds: [{
                         title: "💖 Huge Success!",
                         description: "She clicked **YES**, she loves you! 🫶",
-                        color: 16724838, // Bright pink/magenta decimal color code
+                        color: 16724838, 
                         timestamp: new Date().toISOString()
                     }]
                 })
